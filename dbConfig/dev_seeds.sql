@@ -11,9 +11,9 @@ VALUES
 ('Help', '<h1>Help</h1><br><br>How to use this app....');
 
 
-INSERT INTO goals (goal_name, sport_type, period, period_type, start_date, end_date, target_distance, target_distance_unit)
+INSERT INTO goals (user_id, goal_name, sport_type, period, period_type, start_date, end_date, target_distance, target_distance_unit)
 VALUES
-('Running goal', 'running', 1, 'month', now(), now() + interval '1 month', 50, 'km'),
-('Swimming goal', 'swimming', 1, 'month', now(), now() + interval '1 month', 20, 'km'),
-('Cycling goal', 'cycling', 1, 'month', now(), now() + interval '1 month', 400, 'km'),
-('Walking goal', 'walking', 1, 'month', now(), now() + interval '1 month', 50, 'km');
+(1, 'Running goal', 'running', 1, 'month', now(), now() + interval '1 month', 50, 'km'),
+(2, 'Swimming goal', 'swimming', 1, 'month', now(), now() + interval '1 month', 20, 'km'),
+(3, 'Cycling goal', 'cycling', 1, 'month', now(), now() + interval '1 month', 400, 'km'),
+(4, 'Walking goal', 'walking', 1, 'month', now(), now() + interval '1 month', 50, 'km');

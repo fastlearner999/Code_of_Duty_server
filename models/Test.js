@@ -12,7 +12,6 @@ module.exports = class Test {
                 let testResult = testData.rows.map(u => new Test(u));
                 resolve(testResult);
             } catch (err) {
-                console.log(err);
                 reject(`Unable to connect AWS Postgres database`);
             }
         });
