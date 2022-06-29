@@ -14,6 +14,7 @@ module.exports = class Goal {
         this.target_distance_unit = data.target_distance_unit
         this.create_date = data.create_date
         this.update_date = data.update_date
+        this.user_id = data.user_id
     };
 
     static getAll(){
@@ -50,8 +51,8 @@ module.exports = class Goal {
         return new Promise (async (resolve, reject) => {
             try {
                 let goalData = await db.query(`
-                INSERT INTO goals (goal_name, sport_type, period, period_type, start_date, end_date, target_distance, target_distance_unit) 
-                VALUES ($1, $2, $3, $4 $5, $6, $7, $8) 
+                INSERT INTO goals (goal_name, sport_type, period, period_type, start_date, end_date, target_distance, target_distance_unit, user_id) 
+                VALUES ($1, $2, $3, $4 $5, $6, $7, $8, $9) 
                 RETURNING *;`,
                        [ newgoalData.goal_name,
                        newgoalData.sport_type,
@@ -61,6 +62,7 @@ module.exports = class Goal {
                        newgoalData.end_date,
                        newgoalData.target_distance,
                        newgoalData.target_distance_unit,
+                       newgoalData.user_id
                     ]);
                     let goal = new Goal(goalData.rows[0]);
                 resolve (goal);
@@ -76,8 +78,8 @@ module.exports = class Goal {
                 let goalData = await db.query(
 
                     `UPDATE goals
-                    SET goal_name = $1, sport_type = $2, period = $3, period_type = $4, start_date = $5, end_date = $6, target_distance = $7, target_distance_unit = $8
-                    WHERE id= $9
+                    SET goal_name = $1, sport_type = $2, period = $3, period_type = $4, start_date = $5, end_date = $6, target_distance = $7, target_distance_unit = $8, user_id = $9
+                    WHERE id= $10
                     RETURNING *;`,
                      [                 
                         updateGoalData.goal_name,
@@ -87,7 +89,9 @@ module.exports = class Goal {
                         updateGoalData.start_date,
                         updateGoalData.end_date,
                         updateGoalData.target_distance,
-                        updateGoalData.target_distance_unit
+                        updateGoalData.target_distance_unit,
+                        updateGoalData.user_id,
+                        updateGoalData.id
                     ]);
                 let goal = new Goal(goalData.rows[0]);
                 resolve (goal);
@@ -132,10 +136,7 @@ module.exports = class Goal {
             }
             let goalData = await db.query(
                 `SELECT  goals.*
-                 FROM goals
-                 JOIN user_goal 
-                 ON goals.id = user_goal.goal_id
-                 
+                 FROM goals                 
                 WHERE user_id = $1 AND to_char(create_date, 'MM') = $2 AND to_char(create_date, 'YYYY') = $3 
                 ORDER BY $4 DESC`, 
                 [ userId, targetMonth, targetYear, sortingCriteria ]);
