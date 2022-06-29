@@ -2,7 +2,7 @@ const Goal = require('../models/Goal');
 
 async function getAll (req, res) {
     try {
-        const goals = await Goal.all;
+        const goals = await Goal.getAll();
         res.status(200).json(goals);
     } catch (err) {
         res.status(500).json({err})

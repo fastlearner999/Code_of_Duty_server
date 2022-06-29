@@ -16,7 +16,7 @@ module.exports = class Goal {
         this.update_date = data.update_date
     };
 
-    static get all(){
+    static getAll(){
         return new Promise (async (resolve, reject) => {
             try {
                 let goalData = await db.query(

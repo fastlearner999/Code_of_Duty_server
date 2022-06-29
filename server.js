@@ -9,10 +9,12 @@ const contentRoutes = require('./routes/content');
 const userRoutes = require('./routes/user');
 const goalRoutes = require('./routes/goal');
 const workoutRoutes = require('./routes/workout');
+const testRoutes = require('./routes/test');
 server.use('/content', contentRoutes);
 server.use('/user', userRoutes);
 server.use('/goal', goalRoutes);
 server.use('/workout', workoutRoutes);
+server.use('/test', testRoutes);
 
 server.get('/', (req, res) => res.send('Welcome to the Energize App'));
 

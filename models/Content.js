@@ -10,7 +10,7 @@ module.exports = class Content {
         
     };
 
-    static get all(){
+    static getAll(){
         return new Promise (async (resolve, reject) => {
             try {
                 let contentData = await db.query('SELECT * FROM contents');

@@ -2,7 +2,7 @@ const Content = require('../models/Content');
 
 async function getAll (req, res) {
     try {
-        const contents = await Content.all;
+        const contents = await Content.getAll();
         res.status(200).json(contents)
     } catch (err) {
         res.status(500).json({err})
