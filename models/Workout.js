@@ -74,7 +74,7 @@ module.exports = class Workout {
             try {
                 let workoutData = await db.query(
                     `INSERT INTO workouts (user_id, sport_type, start_time, end_time, break_duration, total_distance, total_distance_unit, total_duration, total_duration_unit) 
-                    VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9) RETURNING *;`, 
+                    VALUES ($1, $2, TO_TIMESTAMP($3, 'YYYY-MM-DD HH24:MI:ss'), TO_TIMESTAMP($4, 'YYYY-MM-DD HH24:MI:ss'), $5, $6, $7, $8, $9) RETURNING *;`, 
                     [ newWorkoutData.user_id, newWorkoutData.sport_type, newWorkoutData.start_time, newWorkoutData.end_time, newWorkoutData.break_duration, newWorkoutData.total_distance, newWorkoutData.total_distance_unit, newWorkoutData.total_duration, newWorkoutData.total_duration_unit ]);
                 let workout = new Workout(workoutData.rows[0]);
                 resolve (workout);
@@ -89,7 +89,7 @@ module.exports = class Workout {
             try {
                 let workoutData = await db.query(
                     `UPDATE workouts 
-                    SET user_id = $1, sport_type = $2, start_time = $3, end_time = $4, break_duration = $5, total_distance = $6, total_distance_unit = $7, total_duration = $8, total_duration_unit = $9
+                    SET user_id = $1, sport_type = $2, start_time = TO_TIMESTAMP($3, 'YYYY-MM-DD HH24:MI:ss'), end_time = TO_TIMESTAMP($4, 'YYYY-MM-DD HH24:MI:ss'), break_duration = $5, total_distance = $6, total_distance_unit = $7, total_duration = $8, total_duration_unit = $9
                     WHERE id = $10 RETURNING *;`, 
                     [ updateWorkoutData.user_id, updateWorkoutData.sport_type, updateWorkoutData.start_time, updateWorkoutData.end_time, updateWorkoutData.break_duration, updateWorkoutData.total_distance, updateWorkoutData.total_distance_unit, updateWorkoutData.total_duration, updateWorkoutData.total_duration_unit, updateWorkoutData.id ]);
                 let workout = new Workout(workoutData.rows[0]);
