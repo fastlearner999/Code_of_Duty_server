@@ -113,9 +113,25 @@ module.exports = class Workout {
             try {
                 let workoutData = await db.query(
                     `UPDATE workouts 
-                    SET user_id = $1, sport_type = $2, start_time = TO_TIMESTAMP($3, 'YYYY-MM-DD HH24:MI:ss'), end_time = TO_TIMESTAMP($4, 'YYYY-MM-DD HH24:MI:ss'), break_duration = $5, total_distance = $6, total_distance_unit = $7, total_duration = $8, total_duration_unit = $9
-                    WHERE id = $10 RETURNING *;`, 
-                    [ updateWorkoutData.user_id, updateWorkoutData.sport_type, updateWorkoutData.start_time, updateWorkoutData.end_time, updateWorkoutData.break_duration, updateWorkoutData.total_distance, updateWorkoutData.total_distance_unit, updateWorkoutData.total_duration, updateWorkoutData.total_duration_unit, updateWorkoutData.id ]);
+                    SET sport_type = $1, 
+                    start_time = TO_TIMESTAMP($2, 'YYYY-MM-DD HH24:MI:ss'), 
+                    end_time = TO_TIMESTAMP($3, 'YYYY-MM-DD HH24:MI:ss'), 
+                    break_duration = $4, 
+                    total_distance = $5, 
+                    total_distance_unit = $6, 
+                    target_duration = $7, 
+                    target_duration_unit = $8, 
+                    update_date = now() 
+                    WHERE id = $9 RETURNING *;`, 
+                    [ updateWorkoutData.sport_type, 
+                        updateWorkoutData.start_time, 
+                        updateWorkoutData.end_time, 
+                        updateWorkoutData.break_duration, 
+                        updateWorkoutData.total_distance, 
+                        updateWorkoutData.total_distance_unit, 
+                        updateWorkoutData.target_duration, 
+                        updateWorkoutData.target_duration_unit, 
+                        updateWorkoutData.id ]);
                 let workout = new Workout(workoutData.rows[0]);
                 resolve (workout);
             } catch (err) {

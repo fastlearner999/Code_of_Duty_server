@@ -100,9 +100,17 @@ module.exports = class Goal {
             try {
                 let goalData = await db.query(
 
-                    `UPDATE goals
-                    SET goal_name = $1, sport_type = $2, period = $3, period_type = $4, start_date = TO_TIMESTAMP($5, 'YYYY-MM-DD HH24:MI:ss'), end_date = TO_TIMESTAMP($6, 'YYYY-MM-DD HH24:MI:ss'), target_distance = $7, target_distance_unit = $8, user_id = $9
-                    WHERE id= $10
+                    `UPDATE goals 
+                    SET goal_name = $1, 
+                    sport_type = $2, 
+                    period = $3, 
+                    period_type = $4, 
+                    start_date = TO_TIMESTAMP($5, 'YYYY-MM-DD HH24:MI:ss'), 
+                    end_date = TO_TIMESTAMP($6, 'YYYY-MM-DD HH24:MI:ss'), 
+                    target_distance = $7, 
+                    target_distance_unit = $8, 
+                    update_date = now() 
+                    WHERE id= $9 
                     RETURNING *;`,
                      [                 
                         updateGoalData.goal_name,
@@ -113,7 +121,6 @@ module.exports = class Goal {
                         updateGoalData.end_date,
                         updateGoalData.target_distance,
                         updateGoalData.target_distance_unit,
-                        updateGoalData.user_id,
                         updateGoalData.id
                     ]);
                 let goal = new Goal(goalData.rows[0]);
