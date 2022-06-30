@@ -17,8 +17,8 @@ module.exports = class Content {
                     `SELECT ID,
                     TITLE,
                     HTML_CONTENT,
-                    SUBSTRING(CAST(CREATE_DATE AS VARCHAR),1,20) AS CREATE_DATE,
-                    SUBSTRING(CAST(UPDATE_DATE AS VARCHAR),1,20) AS UPDATE_DATE 
+                    SUBSTRING(CAST(CREATE_DATE AS VARCHAR),1,19) AS CREATE_DATE,
+                    SUBSTRING(CAST(UPDATE_DATE AS VARCHAR),1,19) AS UPDATE_DATE 
                     FROM contents`);
                 let contents = contentData.rows.map(c => new Content(c));
                 resolve (contents);
@@ -35,8 +35,8 @@ module.exports = class Content {
                 `SELECT ID,
                 TITLE,
                 HTML_CONTENT,
-                SUBSTRING(CAST(CREATE_DATE AS VARCHAR),1,20) AS CREATE_DATE,
-                SUBSTRING(CAST(UPDATE_DATE AS VARCHAR),1,20) AS UPDATE_DATE 
+                SUBSTRING(CAST(CREATE_DATE AS VARCHAR),1,19) AS CREATE_DATE,
+                SUBSTRING(CAST(UPDATE_DATE AS VARCHAR),1,19) AS UPDATE_DATE 
                 FROM contents 
                 WHERE id = $1;`, [id])
                 let content = new Content(contentData.rows[0]);

@@ -23,15 +23,15 @@ module.exports = class Workout {
                     `SELECT ID,
                     USER_ID,
                     SPORT_TYPE,
-                    SUBSTRING(CAST(START_TIME AS VARCHAR),1,20) AS START_TIME,
-                    SUBSTRING(CAST(END_TIME AS VARCHAR),1,20) AS END_TIME,
+                    SUBSTRING(CAST(START_TIME AS VARCHAR),1,19) AS START_TIME,
+                    SUBSTRING(CAST(END_TIME AS VARCHAR),1,19) AS END_TIME,
                     BREAK_DURATION,
                     TOTAL_DISTANCE,
                     TOTAL_DISTANCE_UNIT,
                     TOTAL_DURATION,
                     TOTAL_DURATION_UNIT,
-                    SUBSTRING(CAST(CREATE_DATE AS VARCHAR),1,20) AS CREATE_DATE,
-                    SUBSTRING(CAST(UPDATE_DATE AS VARCHAR),1,20) AS UPDATE_DATE 
+                    SUBSTRING(CAST(CREATE_DATE AS VARCHAR),1,19) AS CREATE_DATE,
+                    SUBSTRING(CAST(UPDATE_DATE AS VARCHAR),1,19) AS UPDATE_DATE 
                     FROM workouts ORDER BY create_date DESC`);
                 let workouts = workoutData.rows.map(w => new Workout(w));
                 resolve (workouts);
@@ -48,15 +48,15 @@ module.exports = class Workout {
                 `SELECT ID,
                 USER_ID,
                 SPORT_TYPE,
-                SUBSTRING(CAST(START_TIME AS VARCHAR),1,20) AS START_TIME,
-                SUBSTRING(CAST(END_TIME AS VARCHAR),1,20) AS END_TIME,
+                SUBSTRING(CAST(START_TIME AS VARCHAR),1,19) AS START_TIME,
+                SUBSTRING(CAST(END_TIME AS VARCHAR),1,19) AS END_TIME,
                 BREAK_DURATION,
                 TOTAL_DISTANCE,
                 TOTAL_DISTANCE_UNIT,
                 TOTAL_DURATION,
                 TOTAL_DURATION_UNIT,
-                SUBSTRING(CAST(CREATE_DATE AS VARCHAR),1,20) AS CREATE_DATE,
-                SUBSTRING(CAST(UPDATE_DATE AS VARCHAR),1,20) AS UPDATE_DATE 
+                SUBSTRING(CAST(CREATE_DATE AS VARCHAR),1,19) AS CREATE_DATE,
+                SUBSTRING(CAST(UPDATE_DATE AS VARCHAR),1,19) AS UPDATE_DATE 
                 FROM workouts WHERE id = $1`, [ id ]);
                 let workout = new Workout(workData.rows[0]);
                 resolve (workout);
@@ -85,15 +85,15 @@ module.exports = class Workout {
                     `SELECT ID,
                     USER_ID,
                     SPORT_TYPE,
-                    SUBSTRING(CAST(START_TIME AS VARCHAR),1,20) AS START_TIME,
-                    SUBSTRING(CAST(END_TIME AS VARCHAR),1,20) AS END_TIME,
+                    SUBSTRING(CAST(START_TIME AS VARCHAR),1,19) AS START_TIME,
+                    SUBSTRING(CAST(END_TIME AS VARCHAR),1,19) AS END_TIME,
                     BREAK_DURATION,
                     TOTAL_DISTANCE,
                     TOTAL_DISTANCE_UNIT,
                     TOTAL_DURATION,
                     TOTAL_DURATION_UNIT,
-                    SUBSTRING(CAST(CREATE_DATE AS VARCHAR),1,20) AS CREATE_DATE,
-                    SUBSTRING(CAST(UPDATE_DATE AS VARCHAR),1,20) AS UPDATE_DATE 
+                    SUBSTRING(CAST(CREATE_DATE AS VARCHAR),1,19) AS CREATE_DATE,
+                    SUBSTRING(CAST(UPDATE_DATE AS VARCHAR),1,19) AS UPDATE_DATE 
                     FROM workouts 
                     WHERE user_id = $1 AND to_char(create_date, 'MM') = $2 AND to_char(create_date, 'YYYY') = $3 
                     ORDER BY $4 DESC`, 

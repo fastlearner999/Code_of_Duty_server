@@ -28,12 +28,12 @@ module.exports = class Goal {
                     SPORT_TYPE,
                     PERIOD,
                     PERIOD_TYPE,
-                    SUBSTRING(CAST(START_DATE AS VARCHAR),1,20) AS START_DATE,
-                    SUBSTRING(CAST(END_DATE AS VARCHAR),1,20) AS END_DATE,
+                    SUBSTRING(CAST(START_DATE AS VARCHAR),1,19) AS START_DATE,
+                    SUBSTRING(CAST(END_DATE AS VARCHAR),1,19) AS END_DATE,
                     TARGET_DISTANCE,
                     TARGET_DISTANCE_UNIT,
-                    SUBSTRING(CAST(CREATE_DATE AS VARCHAR),1,20) AS CREATE_DATE,
-                    SUBSTRING(CAST(UPDATE_DATE AS VARCHAR),1,20) AS UPDATE_DATE 
+                    SUBSTRING(CAST(CREATE_DATE AS VARCHAR),1,19) AS CREATE_DATE,
+                    SUBSTRING(CAST(UPDATE_DATE AS VARCHAR),1,19) AS UPDATE_DATE 
                      FROM goals 
                      ORDER BY create_date DESC`);
                 let goals = goalData.rows.map(g => new Goal(g));
@@ -54,12 +54,12 @@ module.exports = class Goal {
                     SPORT_TYPE,
                     PERIOD,
                     PERIOD_TYPE,
-                    SUBSTRING(CAST(START_DATE AS VARCHAR),1,20) AS START_DATE,
-                    SUBSTRING(CAST(END_DATE AS VARCHAR),1,20) AS END_DATE,
+                    SUBSTRING(CAST(START_DATE AS VARCHAR),1,19) AS START_DATE,
+                    SUBSTRING(CAST(END_DATE AS VARCHAR),1,19) AS END_DATE,
                     TARGET_DISTANCE,
                     TARGET_DISTANCE_UNIT,
-                    SUBSTRING(CAST(CREATE_DATE AS VARCHAR),1,20) AS CREATE_DATE,
-                    SUBSTRING(CAST(UPDATE_DATE AS VARCHAR),1,20) AS UPDATE_DATE 
+                    SUBSTRING(CAST(CREATE_DATE AS VARCHAR),1,19) AS CREATE_DATE,
+                    SUBSTRING(CAST(UPDATE_DATE AS VARCHAR),1,19) AS UPDATE_DATE 
                      FROM goals
                      WHERE id = $1;`, [ id ]);
                 let goal = new Goal(goalData.rows[0]);
@@ -164,12 +164,12 @@ module.exports = class Goal {
                 SPORT_TYPE,
                 PERIOD,
                 PERIOD_TYPE,
-                SUBSTRING(CAST(START_DATE AS VARCHAR),1,20) AS START_DATE,
-                SUBSTRING(CAST(END_DATE AS VARCHAR),1,20) AS END_DATE,
+                SUBSTRING(CAST(START_DATE AS VARCHAR),1,19) AS START_DATE,
+                SUBSTRING(CAST(END_DATE AS VARCHAR),1,19) AS END_DATE,
                 TARGET_DISTANCE,
                 TARGET_DISTANCE_UNIT,
-                SUBSTRING(CAST(CREATE_DATE AS VARCHAR),1,20) AS CREATE_DATE,
-                SUBSTRING(CAST(UPDATE_DATE AS VARCHAR),1,20) AS UPDATE_DATE 
+                SUBSTRING(CAST(CREATE_DATE AS VARCHAR),1,19) AS CREATE_DATE,
+                SUBSTRING(CAST(UPDATE_DATE AS VARCHAR),1,19) AS UPDATE_DATE 
                 FROM goals                 
                 WHERE user_id = $1 AND to_char(create_date, 'MM') = $2 AND to_char(create_date, 'YYYY') = $3 
                 ORDER BY $4 DESC`, 
