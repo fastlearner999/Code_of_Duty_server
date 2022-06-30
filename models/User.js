@@ -23,9 +23,9 @@ module.exports = class User {
                     FIRST_NAME,
                     LAST_NAME,
                     GENDER,
-                    TO_CHAR('YYYY-MM-DD HH24:MI:ss', CREATE_DATE) AS CREATE_DATE,
-                    TO_CHAR('YYYY-MM-DD HH24:MI:ss', UPDATE_DATE) AS UPDATE_DATE,
-                    TO_CHAR('YYYY-MM-DD HH24:MI:ss', LAST_LOGIN) AS LAST_LOGIN 
+                    SUBSTRING(CAST(CREATE_DATE AS VARCHAR),1,20) AS CREATE_DATE,
+                    SUBSTRING(CAST(UPDATE_DATE AS VARCHAR),1,20) AS UPDATE_DATE, 
+                    SUBSTRING(CAST(LAST_LOGIN AS VARCHAR),1,20) AS LAST_LOGIN 
                     FROM users`);
                 let users = userData.rows.map(u => new User(u));
                 resolve(users);
@@ -45,9 +45,9 @@ module.exports = class User {
                     FIRST_NAME,
                     LAST_NAME,
                     GENDER,
-                    TO_CHAR('YYYY-MM-DD HH24:MI:ss', CREATE_DATE) AS CREATE_DATE,
-                    TO_CHAR('YYYY-MM-DD HH24:MI:ss', UPDATE_DATE) AS UPDATE_DATE,
-                    TO_CHAR('YYYY-MM-DD HH24:MI:ss', LAST_LOGIN) AS LAST_LOGIN 
+                    SUBSTRING(CAST(CREATE_DATE AS VARCHAR),1,20) AS CREATE_DATE,
+                    SUBSTRING(CAST(UPDATE_DATE AS VARCHAR),1,20) AS UPDATE_DATE, 
+                    SUBSTRING(CAST(LAST_LOGIN AS VARCHAR),1,20) AS LAST_LOGIN 
                     FROM users where id = $1`, [ id ]);
                 let user = new User(userData.rows[0]);
                 resolve(user);
@@ -109,9 +109,9 @@ module.exports = class User {
                     FIRST_NAME,
                     LAST_NAME,
                     GENDER,
-                    TO_CHAR('YYYY-MM-DD HH24:MI:ss', CREATE_DATE) AS CREATE_DATE,
-                    TO_CHAR('YYYY-MM-DD HH24:MI:ss', UPDATE_DATE) AS UPDATE_DATE,
-                    TO_CHAR('YYYY-MM-DD HH24:MI:ss', LAST_LOGIN) AS LAST_LOGIN 
+                    SUBSTRING(CAST(CREATE_DATE AS VARCHAR),1,20) AS CREATE_DATE,
+                    SUBSTRING(CAST(UPDATE_DATE AS VARCHAR),1,20) AS UPDATE_DATE, 
+                    SUBSTRING(CAST(LAST_LOGIN AS VARCHAR),1,20) AS LAST_LOGIN 
                     FROM users where email = $1 and password = $2`, [ loginData.email, loginData.password ]);
                 let user = new User(userData.rows[0]);
                 await db.query(
