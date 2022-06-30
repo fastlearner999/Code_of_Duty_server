@@ -22,7 +22,18 @@ module.exports = class Goal {
         return new Promise (async (resolve, reject) => {
             try {
                 let goalData = await db.query(
-                    `SELECT * 
+                    `SELECT ID,
+                    USER_ID,
+                    GOAL_NAME,
+                    SPORT_TYPE,
+                    PERIOD,
+                    PERIOD_TYPE,
+                    TO_CHAR('YYYY-MM-DD HH24:MI:ss', START_DATE) AS START_DATE, 
+                    TO_CHAR('YYYY-MM-DD HH24:MI:ss', END_DATE) AS END_DATE,
+                    TARGET_DISTANCE,
+                    TARGET_DISTANCE_UNIT,
+                    TO_CHAR('YYYY-MM-DD HH24:MI:ss', CREATE_DATE) AS CREATE_DATE,
+                    TO_CHAR('YYYY-MM-DD HH24:MI:ss', UPDATE_DATE) AS UPDATE_DATE  
                      FROM goals 
                      ORDER BY create_date DESC`);
                 let goals = goalData.rows.map(g => new Goal(g));
@@ -37,7 +48,18 @@ module.exports = class Goal {
         return new Promise (async (resolve, reject) => {
             try {
                 let goalData = await db.query(
-                    `SELECT * 
+                    `SELECT ID,
+                    USER_ID,
+                    GOAL_NAME,
+                    SPORT_TYPE,
+                    PERIOD,
+                    PERIOD_TYPE,
+                    TO_CHAR('YYYY-MM-DD HH24:MI:ss', START_DATE) AS START_DATE, 
+                    TO_CHAR('YYYY-MM-DD HH24:MI:ss', END_DATE) AS END_DATE,
+                    TARGET_DISTANCE,
+                    TARGET_DISTANCE_UNIT,
+                    TO_CHAR('YYYY-MM-DD HH24:MI:ss', CREATE_DATE) AS CREATE_DATE,
+                    TO_CHAR('YYYY-MM-DD HH24:MI:ss', UPDATE_DATE) AS UPDATE_DATE  
                      FROM goals
                      WHERE id = $1;`, [ id ]);
                 let goal = new Goal(goalData.rows[0]);
@@ -136,8 +158,19 @@ module.exports = class Goal {
                 sortingCriteria = 'sport_type';
             }
             let goalData = await db.query(
-                `SELECT  goals.*
-                 FROM goals                 
+                `SELECT ID,
+                USER_ID,
+                GOAL_NAME,
+                SPORT_TYPE,
+                PERIOD,
+                PERIOD_TYPE,
+                TO_CHAR('YYYY-MM-DD HH24:MI:ss', START_DATE) AS START_DATE, 
+                TO_CHAR('YYYY-MM-DD HH24:MI:ss', END_DATE) AS END_DATE,
+                TARGET_DISTANCE,
+                TARGET_DISTANCE_UNIT,
+                TO_CHAR('YYYY-MM-DD HH24:MI:ss', CREATE_DATE) AS CREATE_DATE,
+                TO_CHAR('YYYY-MM-DD HH24:MI:ss', UPDATE_DATE) AS UPDATE_DATE 
+                FROM goals                 
                 WHERE user_id = $1 AND to_char(create_date, 'MM') = $2 AND to_char(create_date, 'YYYY') = $3 
                 ORDER BY $4 DESC`, 
                 [ userId, targetMonth, targetYear, sortingCriteria ]);

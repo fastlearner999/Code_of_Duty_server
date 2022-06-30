@@ -16,7 +16,17 @@ module.exports = class User {
     static getAll(){
         return new Promise (async (resolve, reject) => {
             try {
-                let userData = await db.query('SELECT * FROM users');
+                let userData = await db.query(
+                    `SELECT ID, 
+                    EMAIL,
+                    PASSWORD,
+                    FIRST_NAME,
+                    LAST_NAME,
+                    GENDER,
+                    TO_CHAR('YYYY-MM-DD HH24:MI:ss', CREATE_DATE) AS CREATE_DATE,
+                    TO_CHAR('YYYY-MM-DD HH24:MI:ss', UPDATE_DATE) AS UPDATE_DATE,
+                    TO_CHAR('YYYY-MM-DD HH24:MI:ss', LAST_LOGIN) AS LAST_LOGIN 
+                    FROM users`);
                 let users = userData.rows.map(u => new User(u));
                 resolve(users);
             } catch (err) {
@@ -28,7 +38,17 @@ module.exports = class User {
     static findById(id){
         return new Promise (async (resolve, reject) => {
             try {
-                let userData = await db.query(`SELECT * FROM users where id = $1`, [ id ]);
+                let userData = await db.query(
+                    `SELECT ID, 
+                    EMAIL,
+                    PASSWORD,
+                    FIRST_NAME,
+                    LAST_NAME,
+                    GENDER,
+                    TO_CHAR('YYYY-MM-DD HH24:MI:ss', CREATE_DATE) AS CREATE_DATE,
+                    TO_CHAR('YYYY-MM-DD HH24:MI:ss', UPDATE_DATE) AS UPDATE_DATE,
+                    TO_CHAR('YYYY-MM-DD HH24:MI:ss', LAST_LOGIN) AS LAST_LOGIN 
+                    FROM users where id = $1`, [ id ]);
                 let user = new User(userData.rows[0]);
                 resolve(user);
             } catch (err) {
@@ -82,7 +102,17 @@ module.exports = class User {
     static async login(loginData){
         return new Promise (async (resolve, reject) => {
             try {
-                let userData = await db.query(`SELECT * FROM users where email = $1 and password = $2`, [ loginData.email, loginData.password ]);
+                let userData = await db.query(
+                    `SELECT ID, 
+                    EMAIL,
+                    PASSWORD,
+                    FIRST_NAME,
+                    LAST_NAME,
+                    GENDER,
+                    TO_CHAR('YYYY-MM-DD HH24:MI:ss', CREATE_DATE) AS CREATE_DATE,
+                    TO_CHAR('YYYY-MM-DD HH24:MI:ss', UPDATE_DATE) AS UPDATE_DATE,
+                    TO_CHAR('YYYY-MM-DD HH24:MI:ss', LAST_LOGIN) AS LAST_LOGIN 
+                    FROM users where email = $1 and password = $2`, [ loginData.email, loginData.password ]);
                 let user = new User(userData.rows[0]);
                 await db.query(
                     `UPDATE users 

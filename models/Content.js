@@ -13,7 +13,13 @@ module.exports = class Content {
     static getAll(){
         return new Promise (async (resolve, reject) => {
             try {
-                let contentData = await db.query('SELECT * FROM contents');
+                let contentData = await db.query(
+                    `SELECT ID,
+                    TITLE,
+                    HTML_CONTENT,
+                    TO_CHAR('YYYY-MM-DD HH24:MI:ss', CREATE_DATE) AS CREATE_DATE,
+                    TO_CHAR('YYYY-MM-DD HH24:MI:ss', UPDATE_DATE) AS UPDATE_DATE 
+                    FROM contents`);
                 let contents = contentData.rows.map(c => new Content(c));
                 resolve (contents);
             } catch (err) {
@@ -26,7 +32,11 @@ module.exports = class Content {
         return new Promise (async (resolve, reject) => {
             try {
                let contentData = await db.query(
-                `SELECT * 
+                `SELECT ID,
+                TITLE,
+                HTML_CONTENT,
+                TO_CHAR('YYYY-MM-DD HH24:MI:ss', CREATE_DATE) AS CREATE_DATE,
+                TO_CHAR('YYYY-MM-DD HH24:MI:ss', UPDATE_DATE) AS UPDATE_DATE  
                 FROM contents 
                 WHERE id = $1;`, [id])
                 let content = new Content(contentData.rows[0]);

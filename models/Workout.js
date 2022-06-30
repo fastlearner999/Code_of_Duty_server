@@ -19,7 +19,20 @@ module.exports = class Workout {
     static getAll(){
         return new Promise (async (resolve, reject) => {
             try {
-                let workoutData = await db.query('SELECT * FROM workouts ORDER BY create_date DESC');
+                let workoutData = await db.query(
+                    `SELECT ID,
+                    USER_ID,
+                    SPORT_TYPE,
+                    TO_CHAR('YYYY-MM-DD HH24:MI:ss', START_TIME) AS START_TIME, 
+                    TO_CHAR('YYYY-MM-DD HH24:MI:ss', END_TIME) AS END_TIME,
+                    BREAK_DURATION,
+                    TOTAL_DISTANCE,
+                    TOTAL_DISTANCE_UNIT,
+                    TOTAL_DURATION,
+                    TOTAL_DURATION_UNIT,
+                    TO_CHAR('YYYY-MM-DD HH24:MI:ss', CREATE_DATE) AS CREATE_DATE,
+                    TO_CHAR('YYYY-MM-DD HH24:MI:ss', UPDATE_DATE) AS UPDATE_DATE 
+                    FROM workouts ORDER BY create_date DESC`);
                 let workouts = workoutData.rows.map(w => new Workout(w));
                 resolve (workouts);
             } catch (err) {
@@ -31,7 +44,20 @@ module.exports = class Workout {
     static findById(id){
         return new Promise (async (resolve, reject) => {
             try {
-                let workData = await db.query(`SELECT * FROM workouts WHERE id = $1`, [ id ]);
+                let workData = await db.query(
+                `SELECT ID,
+                USER_ID,
+                SPORT_TYPE,
+                TO_CHAR('YYYY-MM-DD HH24:MI:ss', START_TIME) AS START_TIME, 
+                TO_CHAR('YYYY-MM-DD HH24:MI:ss', END_TIME) AS END_TIME,
+                BREAK_DURATION,
+                TOTAL_DISTANCE,
+                TOTAL_DISTANCE_UNIT,
+                TOTAL_DURATION,
+                TOTAL_DURATION_UNIT,
+                TO_CHAR('YYYY-MM-DD HH24:MI:ss', CREATE_DATE) AS CREATE_DATE,
+                TO_CHAR('YYYY-MM-DD HH24:MI:ss', UPDATE_DATE) AS UPDATE_DATE
+                FROM workouts WHERE id = $1`, [ id ]);
                 let workout = new Workout(workData.rows[0]);
                 resolve (workout);
             } catch (err) {
@@ -56,7 +82,18 @@ module.exports = class Workout {
                     sortingCriteria = 'sport_type';
                 }
                 let workoutData = await db.query(
-                    `SELECT * 
+                    `SELECT ID,
+                    USER_ID,
+                    SPORT_TYPE,
+                    TO_CHAR('YYYY-MM-DD HH24:MI:ss', START_TIME) AS START_TIME, 
+                    TO_CHAR('YYYY-MM-DD HH24:MI:ss', END_TIME) AS END_TIME,
+                    BREAK_DURATION,
+                    TOTAL_DISTANCE,
+                    TOTAL_DISTANCE_UNIT,
+                    TOTAL_DURATION,
+                    TOTAL_DURATION_UNIT,
+                    TO_CHAR('YYYY-MM-DD HH24:MI:ss', CREATE_DATE) AS CREATE_DATE,
+                    TO_CHAR('YYYY-MM-DD HH24:MI:ss', UPDATE_DATE) AS UPDATE_DATE 
                     FROM workouts 
                     WHERE user_id = $1 AND to_char(create_date, 'MM') = $2 AND to_char(create_date, 'YYYY') = $3 
                     ORDER BY $4 DESC`, 
