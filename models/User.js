@@ -41,7 +41,7 @@ module.exports = class User {
                 let userData = await db.query(
                     `SELECT ID, 
                     EMAIL,
-                    PASSWORD,
+                    '' AS PASSWORD,
                     FIRST_NAME,
                     LAST_NAME,
                     GENDER,
