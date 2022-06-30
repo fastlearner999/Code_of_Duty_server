@@ -43,7 +43,9 @@ async function update (req, res) {
 
 async function destroy (req, res) {
     try {
-        await User.destroy(req.body);
+        const user = await User.findById(req.params.id);
+        console.log(user);
+        await user.destroy();
         res.status(204).end();
     } catch (err) {
         res.status(404).json({err});

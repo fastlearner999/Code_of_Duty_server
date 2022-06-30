@@ -68,10 +68,10 @@ module.exports = class User {
         });
     };
 
-    static async destroy(deleteUserData){
+    destroy(){
         return new Promise(async(resolve, reject) => {
             try {
-                await db.query(`DELETE FROM users WHERE id = $1`, [ deleteUserData.id ]);
+                await db.query(`DELETE FROM users WHERE id = $1`, [ this.id ]);
                 resolve(`User was deleted`);
             } catch (err) {
                 reject(`User could not be deleted`);
