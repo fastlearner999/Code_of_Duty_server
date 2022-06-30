@@ -53,7 +53,7 @@ module.exports = class Goal {
             try {
                 let goalData = await db.query(`
                 INSERT INTO goals( goal_name, sport_type, period, period_type, start_date, end_date, target_distance, target_distance_unit, user_id) 
-                VALUES ($1, $2, $3, $4 TO_TIMESTAMP($5, 'YYYY-MM-DD HH24:MI:ss'), TO_TIMESTAMP($6, 'YYYY-MM-DD HH24:MI:ss'), $7, $8, $9) 
+                VALUES ($1, $2, $3, $4, TO_TIMESTAMP($5, 'YYYY-MM-DD HH24:MI:ss'), TO_TIMESTAMP($6, 'YYYY-MM-DD HH24:MI:ss'), $7, $8, $9) 
                 RETURNING *;`,
                        [ newgoalData.goal_name,
                        newgoalData.sport_type,
