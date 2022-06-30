@@ -21,10 +21,7 @@ async function findById (req, res) {
 async function findByUserId (req, res) {
     try {
         const userId = req.params.userId;
-        const month = req.params.month;
-        const year = req.params.year;
-        const sortBy = req.params.sortBy;
-        const workouts = await Workout.findByUserId(userId, month, year, sortBy);
+        const workouts = await Workout.findByUserId(userId);
         res.status(200).json(workouts);
     } catch (err) {
         res.status(404).json({err})

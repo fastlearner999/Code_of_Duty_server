@@ -141,22 +141,9 @@ module.exports = class Goal {
     
 
 
-    static async findByUserId(userId, month, year, sortBy){
+    static async findByUserId(userId){
         return new Promise (async (resolve, reject) => {
         try {
-            let targetMonth = "" + new Date().getMonth();
-            if (month !== null) {
-                targetMonth = month;
-            }
-            let targetYear = "" + new Date().getFullYear();
-            if (year !== null) {
-             
-                targetYear = year;
-            }
-            let sortingCriteria = 'create_date';
-            if (sortBy === 'sport_type') {
-                sortingCriteria = 'sport_type';
-            }
             let goalData = await db.query(
                 `SELECT ID,
                 USER_ID,
@@ -171,12 +158,11 @@ module.exports = class Goal {
                 SUBSTRING(CAST(CREATE_DATE AS VARCHAR),1,19) AS CREATE_DATE,
                 SUBSTRING(CAST(UPDATE_DATE AS VARCHAR),1,19) AS UPDATE_DATE 
                 FROM goals                 
-                WHERE user_id = $1 AND to_char(create_date, 'MM') = $2 AND to_char(create_date, 'YYYY') = $3 
-                ORDER BY $4 DESC`, 
-                [ userId, targetMonth, targetYear, sortingCriteria ]);
-            //let goals = goalData.rows.map(g => new Goal(g));
-            let goal = new Goal(goalData.rows[0]);
-            resolve (goal);
+                WHERE user_id = $1 
+                ORDER BY create_date DESC`, 
+                [ userId ]);
+            let goals = goalData.rows.map(w => new Goal(w));
+            resolve (goals);
         } catch (err) {
             console.log(err);
             reject('Goal not found');
