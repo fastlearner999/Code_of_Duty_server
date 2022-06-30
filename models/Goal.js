@@ -52,12 +52,8 @@ module.exports = class Goal {
         return new Promise (async (resolve, reject) => {
             try {
                 let goalData = await db.query(`
-<<<<<<< HEAD
-                INSERT INTO goals ( goal_name, sport_type, period, period_type, start_date, end_date, target_distance, target_distance_unit, user_id) 
-=======
-                INSERT INTO goals (goal_name, sport_type, period, period_type, start_date, end_date, target_distance, target_distance_unit, user_id) 
->>>>>>> 43b6045e6253404c97e26f3fe737bcb32f9ab289
-                VALUES ($1, $2, $3, $4 $5, $6, $7, $8, $9) 
+                INSERT INTO goals( goal_name, sport_type, period, period_type, start_date, end_date, target_distance, target_distance_unit, user_id) 
+                VALUES ($1, $2, $3, $4 TO_TIMESTAMP($5, 'YYYY-MM-DD HH24:MI:ss'), TO_TIMESTAMP($6, 'YYYY-MM-DD HH24:MI:ss'), $7, $8, $9) 
                 RETURNING *;`,
                        [ newgoalData.goal_name,
                        newgoalData.sport_type,
@@ -132,6 +128,7 @@ module.exports = class Goal {
             }
             let targetYear = "" + new Date().getFullYear();
             if (year !== null) {
+             
                 targetYear = year;
             }
             let sortingCriteria = 'create_date';
