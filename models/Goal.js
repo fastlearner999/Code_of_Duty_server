@@ -101,16 +101,15 @@ module.exports = class Goal {
         });
     };
 
-    destroy(){
+    static async destroy(deleteGoalData){
         return new Promise(async(resolve, reject) => {
             try {
-                const result = await db.query(
-                    'DELETE FROM goals WHERE id = $1 RETURNING *', [ this.id ]);
-
-                const goal = await Goal.findById(result.rows[0]);
-
+                //const result = 
+                await db.query(
+                    'DELETE FROM goals WHERE id = $1', [ deleteGoalData.id ]);
+                //const goal = await Goal.findById(result.rows[0]);
                 // if(!goals.length){await Goal.destroy()}
-                resolve(goal)
+                resolve('User was deleted');
             } catch (err) {
                 reject('Goal could not be deleted')
             }
@@ -119,7 +118,7 @@ module.exports = class Goal {
     
 
 
-    static findByUserId(userId, month, year, sortBy){
+    static async findByUserId(userId, month, year, sortBy){
         return new Promise (async (resolve, reject) => {
         try {
             let targetMonth = "" + new Date().getMonth();
@@ -140,8 +139,9 @@ module.exports = class Goal {
                 WHERE user_id = $1 AND to_char(create_date, 'MM') = $2 AND to_char(create_date, 'YYYY') = $3 
                 ORDER BY $4 DESC`, 
                 [ userId, targetMonth, targetYear, sortingCriteria ]);
-            let goals = goalData.rows.map(g => new Goal(g));
-            resolve (goals);
+            //let goals = goalData.rows.map(g => new Goal(g));
+            let goal = new Goal(goalData.rows[0]);
+            resolve (goal);
         } catch (err) {
             reject('Goal not found');
         }
