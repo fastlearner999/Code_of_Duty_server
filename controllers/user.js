@@ -1,5 +1,5 @@
-//const bcrypt = require('bcryptjs');
-//const jwt = require('jsonwebtoken');
+const bcrypt = require('bcryptjs');
+const jwt = require('jsonwebtoken');
 
 const User = require('../models/User');
 
@@ -23,10 +23,10 @@ async function findById (req, res) {
 
 async function create (req, res) {
     try {
-        //const salt = await bcrypt.genSalt();
-        //const hashed = await bcrypt.hash(req.body.password, salt);
-        //const user = await User.create({...req.body, password: hashed});
-        const user = await User.create(req.body);
+        const salt = await bcrypt.genSalt();
+        const hashed = await bcrypt.hash(req.body.password, salt);
+        const user = await User.create({...req.body, password: hashed});
+        //const user = await User.create(req.body);
         res.status(201).json(user);
     } catch (err) {
         res.status(422).json({err})
@@ -54,8 +54,8 @@ async function destroy (req, res) {
 async function login (req, res) {
     try {
         const user = await User.login(req.body);
-        res.status(200).json(user);
-        /*const authed = bcrypt.compare(req.body.password, user.password);
+        //res.status(200).json(user);
+        const authed = bcrypt.compare(req.body.password, user.password);
         if (!!authed){
             const payload = {id: user.id, email: user.email, last_login: user.last_login};
             const sendToken = (err, token) => {
@@ -68,7 +68,7 @@ async function login (req, res) {
             jwt.sign(payload, process.env.SECERT, {expiresIn: 60}, sendToken);
         } else {
             throw new Error('User could not be authenticated')  
-        }*/
+        }
     } catch (err) {
         res.status(401).json({err});
     };
