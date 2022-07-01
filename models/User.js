@@ -99,7 +99,7 @@ module.exports = class User {
         })
     };
 
-    static async login(loginData){
+    static async findByEmail(email){
         return new Promise (async (resolve, reject) => {
             try {
                 let userData = await db.query(
@@ -112,7 +112,7 @@ module.exports = class User {
                     SUBSTRING(CAST(CREATE_DATE AS VARCHAR),1,19) AS CREATE_DATE,
                     SUBSTRING(CAST(UPDATE_DATE AS VARCHAR),1,19) AS UPDATE_DATE, 
                     SUBSTRING(CAST(LAST_LOGIN AS VARCHAR),1,19) AS LAST_LOGIN 
-                    FROM users where email = $1 and password = $2`, [ loginData.email, loginData.password ]);
+                    FROM users where email = $1`, [ email ]);
                 let user = new User(userData.rows[0]);
                 await db.query(
                     `UPDATE users 
@@ -120,7 +120,7 @@ module.exports = class User {
                     WHERE id = $1`, [ user.id ]);
                 resolve (user);
             } catch (err) {
-                reject(`User could not login`);
+                reject(`User not found`);
             }
         });
     };

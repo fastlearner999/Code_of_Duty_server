@@ -171,7 +171,6 @@ module.exports = class Goal {
             let goals = goalData.rows.map(w => new Goal(w));
             resolve (goals);
         } catch (err) {
-            console.log(err);
             reject('Goal not found');
         }
     });

@@ -53,7 +53,7 @@ async function destroy (req, res) {
 
 async function login (req, res) {
     try {
-        const user = await User.login(req.body);
+        const user = await User.findByEmail(req.body.email);
         //res.status(200).json(user);
         const authed = bcrypt.compare(req.body.password, user.password);
         if (!!authed){
@@ -70,6 +70,7 @@ async function login (req, res) {
             throw new Error('User could not be authenticated')  
         }
     } catch (err) {
+        console.log(err);
         res.status(401).json({err});
     };
 }
