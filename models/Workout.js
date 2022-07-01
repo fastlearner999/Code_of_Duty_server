@@ -119,8 +119,8 @@ module.exports = class Workout {
                     break_duration = $4, 
                     total_distance = $5, 
                     total_distance_unit = $6, 
-                    target_duration = $7, 
-                    target_duration_unit = $8, 
+                    total_duration = $7, 
+                    total_duration_unit = $8, 
                     update_date = now() 
                     WHERE id = $9 RETURNING *;`, 
                     [ updateWorkoutData.sport_type, 
@@ -129,8 +129,8 @@ module.exports = class Workout {
                         updateWorkoutData.break_duration, 
                         updateWorkoutData.total_distance, 
                         updateWorkoutData.total_distance_unit, 
-                        updateWorkoutData.target_duration, 
-                        updateWorkoutData.target_duration_unit, 
+                        updateWorkoutData.total_duration, 
+                        updateWorkoutData.total_duration_unit, 
                         updateWorkoutData.id ]);
                 let workout = new Workout(workoutData.rows[0]);
                 resolve (workout);
