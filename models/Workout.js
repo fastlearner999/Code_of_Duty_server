@@ -140,10 +140,10 @@ module.exports = class Workout {
         });
     };
 
-    static async destroy(deleteWorkoutData){
+    static async destroy(id){
         return new Promise(async(resolve, reject) => {
             try {
-                await db.query('DELETE FROM workouts WHERE id = $1', [ deleteWorkoutData.id ]);
+                await db.query('DELETE FROM workouts WHERE id = $1', [ id ]);
                 resolve('Workout was deleted');
             } catch (err) {
                 reject('Workout could not be deleted')

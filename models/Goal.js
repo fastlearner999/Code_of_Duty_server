@@ -131,12 +131,12 @@ module.exports = class Goal {
         });
     };
 
-    static async destroy(deleteGoalData){
+    static async destroy(id){
         return new Promise(async(resolve, reject) => {
             try {
                 //const result = 
                 await db.query(
-                    'DELETE FROM goals WHERE id = $1', [ deleteGoalData.id ]);
+                    'DELETE FROM goals WHERE id = $1', [ id ]);
                 //const goal = await Goal.findById(result.rows[0]);
                 // if(!goals.length){await Goal.destroy()}
                 resolve('User was deleted');
