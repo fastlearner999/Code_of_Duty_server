@@ -1,5 +1,5 @@
 module.exports.verifyTokenFromClient = (req, res, next) => {
-    const token = req.headers['authorization'];
+    const token = req.headers['Authorization'];
     if (token) {
         jwt.verify(token, process.env.SECERT, async (err, data) => {
             if (err) {
