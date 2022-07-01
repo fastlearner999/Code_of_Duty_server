@@ -65,7 +65,7 @@ async function login (req, res) {
                     token: token
                 })
             };
-            jwt.sign(payload, process.env.SECERT, {expiresIn: 60}, sendToken);
+            jwt.sign(payload, process.env.SECERT, {expiresIn: '2h'}, sendToken);
         } else {
             throw new Error('User could not be authenticated')  
         }
