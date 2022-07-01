@@ -1,5 +1,5 @@
-require('./env');
-const app = require('./server');
+require('./util/env');
+const app = require('./util/server');
 
 const port = process.env.PORT || 3000;
 
