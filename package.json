@@ -1,12 +1,9 @@
 {
-  "description": "LAP 2 debug assignment",
+  "description": "LAP 2 project - Engerize - Team Code of Duty",
   "scripts": {
     "start": "node index.js",
     "dev": "nodemon index.js",
-    "seedDev": "node dbConfig/seedDev.js",
-    "test": "jest --setupFiles ./tests/integration/config.js --watchAll --detectOpenHandles --runInBand --verbose",
-    "unitTests": "jest --testPathPattern=/unit/ --watchAll --verbose",
-    "coverage": "jest --testPathPattern=/unit/ --coverage"
+    "seedDev": "node dbConfig/seedDev.js"
   },
   "jest": {
     "testEnvironment": "node",
@@ -14,7 +11,7 @@
       "/node_modules/"
     ]
   },
-  "author": "futureproof",
+  "author": "Team Code of Duty",
   "license": "ISC",
   "devDependencies": {
     "jest": "^26.6.3",
